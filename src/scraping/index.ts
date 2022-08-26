@@ -4,21 +4,26 @@ const puppeteer = require('puppeteer');
 // ---------
 // variables
 // ---------
-const DOMAIN = 'https://www.zonaprop.com.ar/';
-const UBICATION = 'villa-urquiza-capital-federal';
-const URL = `${DOMAIN}departamentos-venta-q-${UBICATION}.html`;
+enum PARAMS_PAGE {
+  DOMAIN = 'https://www.zonaprop.com.ar/',
+  UBICATION = 'villa-urquiza-capital-federal',
+}
+//const DOMAIN = 'https://www.zonaprop.com.ar/';
+//const UBICATION = 'villa-urquiza-capital-federal';
+//const URL = `${DOMAIN}departamentos-venta-q-${UBICATION}.html`;
+const URL_PAGE = `${PARAMS_PAGE.DOMAIN}departamentos-venta-q-${PARAMS_PAGE.UBICATION}.html`;
 const PATH_FILE_IMAGE = 'src/scraping/images/';
-const INPUT_SEARCH = '[data-qa=search-input] input';
+//const INPUT_SEARCH = '[data-qa=search-input] input';
 //const BUTTON_SEARCH = '[data-qa=search-button]';
-const BUTTON_SEARCH = '.apply-filters button';
-const COMPONENT_CARD = 'postings-container';
+//const BUTTON_SEARCH = '.apply-filters button';
+//const COMPONENT_CARD = 'postings-container';
 
 (async () => {
   //headless: open browser  [temp]
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
-  await page.goto(URL);
+  await page.goto(URL_PAGE);
   // capture screenshot
   await page.screenshot({ path: PATH_FILE_IMAGE + 'home.png' });
 
