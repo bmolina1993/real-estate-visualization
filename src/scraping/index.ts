@@ -17,7 +17,7 @@ const PATH_FILE_IMAGE = 'src/scraping/images/';
   });
   const page = await browser.newPage();
 
-  await page.goto(URL_PAGE);
+  await page.goto(URL_PAGE, {waitUntil: 'load'});
   // capture screenshot
   await page.screenshot({ path: PATH_FILE_IMAGE + 'home.png' });
 
@@ -31,10 +31,31 @@ const PATH_FILE_IMAGE = 'src/scraping/images/';
     (document) => Number(document.textContent.split(' ', 1)[0]),
   );
 
+  // average page by total result cosidering 20 page per page
+  const pageCountAvg = Math.round(totalResult/20);
   console.log("totalResult: ", totalResult) //[x]
+  console.log("pageCountAvg: ", pageCountAvg) //[x]
+
   // $$eval = querySelectorAll
+  // extract all url pages per card
+  let arrCardlinks = await page.$$eval(
+    QUERY_SEARCHER.CARD_URL,
+    (document) => {
+      const links = [];
+      document.forEach(item => {
+        links.push(item.attributes.getNamedItem("data-to-posting").textContent)
+      });
+      return links;
+    }
+  );
+
+  // add domain for each endPoint page
+  // item: remove first slash from endPoint
+  arrCardlinks = arrCardlinks.map(item => PARAMS_SEARCHER.DOMAIN + item.substring(1))
+
+  console.log("arrCardlinks: ", arrCardlinks) //[x]
 
   //await for specific time for watch the result on navegator
-  //await new Promise((r) => setTimeout(r, 5000));
+  //await new Promise((r) => setTimeout(r, 60000));
   await browser.close();
 })();
