@@ -112,9 +112,22 @@ const settingLunch = {
     );
     console.log('address: ', address); //[x]
 
+    //get all features
+    await pageDet.waitForSelector(QUERY_SEARCHER.FEATURE_DEPT);
+    const featuresDept = await pageDet.$$eval(
+      QUERY_SEARCHER.FEATURE_DEPT,
+      (selector) => {
+        const arr = [];
+        selector.forEach((item) => {
+          arr.push(item.innerText);
+        });
+        return arr;
+      },
+    );
+    console.log('featuresDept: ', featuresDept); //[x]
+
     await browserDet.close();
   }
-
   //await for specific time for watch the result on navegator
   //await new Promise((r) => setTimeout(r, 60000));
 })();
