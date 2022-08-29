@@ -111,6 +111,7 @@ interface IDataEstate {
   address?: string;
   featureDept?: string[];
   featureGral?: string[];
+  linkMap?: string;
   geolocation?: IGeolocation;
 }
 

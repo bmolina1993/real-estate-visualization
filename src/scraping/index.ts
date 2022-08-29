@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
+
 import {
   PARAMS_SEARCHER,
   QUERY_SEARCHER,
@@ -33,7 +33,7 @@ const settingLunch = {
   // output: 193
   const totalResult = await page.$eval(
     QUERY_SEARCHER.TOTAL_RESULT,
-    (selector) => Number(selector.textContent.split(' ', 1)[0]),
+    (selector: HTMLElement) => Number(selector.textContent.split(' ', 1)[0]),
   );
 
   // average page by total result cosidering 20 page per page
@@ -45,13 +45,16 @@ const settingLunch = {
 
   // $$eval = querySelectorAll
   // extract all url pages per card
-  let arrCardlinks = await page.$$eval(QUERY_SEARCHER.CARD_URL, (selector) => {
-    const links = [];
-    selector.forEach((item) => {
-      links.push(item.attributes.getNamedItem('data-to-posting').textContent);
-    });
-    return links;
-  });
+  let arrCardlinks = await page.$$eval(
+    QUERY_SEARCHER.CARD_URL,
+    (selector: HTMLElement[]) => {
+      const links = [];
+      selector.forEach((item) => {
+        links.push(item.attributes.getNamedItem('data-to-posting').textContent);
+      });
+      return links;
+    },
+  );
   await browser.close();
 
   // add domain for each endPoint link
@@ -73,7 +76,7 @@ const settingLunch = {
     await pageDet.waitForSelector(QUERY_SEARCHER.PRICE);
     const price = await pageDet.$eval(
       QUERY_SEARCHER.PRICE,
-      (selector) => selector?.innerText,
+      (selector: HTMLElement) => selector?.innerText,
     );
     console.log('price: ', price); //[x]
 
@@ -84,7 +87,7 @@ const settingLunch = {
       await pageDet.waitForSelector(QUERY_SEARCHER.EXPENSE, { timeout: 10000 });
       expense = await pageDet.$eval(
         QUERY_SEARCHER.EXPENSE,
-        (selector) => selector?.innerText,
+        (selector: HTMLElement) => selector?.innerText,
       );
     } catch (error) {
       expense = null;
@@ -95,11 +98,11 @@ const settingLunch = {
     await pageDet.waitForSelector(QUERY_SEARCHER.PUB_VIEW);
     const published = await pageDet.$$eval(
       QUERY_SEARCHER.PUB_VIEW,
-      (selector) => selector[0]?.textContent,
+      (selector: HTMLElement[]) => selector[0]?.textContent,
     );
     const views = await pageDet.$$eval(
       QUERY_SEARCHER.PUB_VIEW,
-      (selector) => selector[1]?.textContent,
+      (selector: HTMLElement[]) => selector[1]?.textContent,
     );
     console.log('published: ', published); //[x]
     console.log('views: ', views); //[x]
@@ -108,7 +111,7 @@ const settingLunch = {
     await pageDet.waitForSelector(QUERY_SEARCHER.ADDRESS);
     const address = await pageDet.$eval(
       QUERY_SEARCHER.ADDRESS,
-      (selector) => selector.innerText.split('\n')[0],
+      (selector: HTMLElement) => selector.innerText.split('\n')[0],
     );
     console.log('address: ', address); //[x]
 
@@ -116,7 +119,7 @@ const settingLunch = {
     await pageDet.waitForSelector(QUERY_SEARCHER.FEATURE_DEPT);
     const featuresDept = await pageDet.$$eval(
       QUERY_SEARCHER.FEATURE_DEPT,
-      (selector) => {
+      (selector: HTMLElement[]) => {
         const arr = [];
         selector.forEach((item) => {
           arr.push(item.innerText);
@@ -132,9 +135,9 @@ const settingLunch = {
       await pageDet.waitForSelector(QUERY_SEARCHER.FEATURE_GRAL, {
         timeout: 10000,
       });
-      const featuresGral = await pageDet.$$eval(
+      featuresGral = await pageDet.$$eval(
         QUERY_SEARCHER.FEATURE_GRAL,
-        (selector) => {
+        (selector: HTMLElement[]) => {
           const arr = [];
           selector.forEach((item) => {
             arr.push(item.innerText.replace('\n', ''));
@@ -142,10 +145,18 @@ const settingLunch = {
           return arr;
         },
       );
-      console.log('featuresGral: ', featuresGral); //[x]
     } catch (error) {
       featuresGral = [];
     }
+    console.log('featuresGral: ', featuresGral); //[x]
+
+    // get url google map from tag
+    await pageDet.waitForSelector(QUERY_SEARCHER.GEOLOCATION);
+    const linkMap = await pageDet.$eval(
+      QUERY_SEARCHER.GEOLOCATION,
+      (selector: HTMLImageElement) => selector.src,
+    );
+    console.log('linkMap: ', linkMap); //[x]
 
     await browserDet.close();
   }
