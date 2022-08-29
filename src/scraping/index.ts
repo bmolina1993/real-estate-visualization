@@ -81,7 +81,7 @@ const settingLunch = {
     // if element not exist, add field with null data
     let expense: string;
     try {
-      await pageDet.waitForSelector(QUERY_SEARCHER.EXPENSE);
+      await pageDet.waitForSelector(QUERY_SEARCHER.EXPENSE, { timeout: 10000 });
       expense = await pageDet.$eval(
         QUERY_SEARCHER.EXPENSE,
         (selector) => selector?.innerText,
@@ -125,6 +125,27 @@ const settingLunch = {
       },
     );
     console.log('featuresDept: ', featuresDept); //[x]
+
+    //get all features general
+    let featuresGral: string[];
+    try {
+      await pageDet.waitForSelector(QUERY_SEARCHER.FEATURE_GRAL, {
+        timeout: 10000,
+      });
+      const featuresGral = await pageDet.$$eval(
+        QUERY_SEARCHER.FEATURE_GRAL,
+        (selector) => {
+          const arr = [];
+          selector.forEach((item) => {
+            arr.push(item.innerText.replace('\n', ''));
+          });
+          return arr;
+        },
+      );
+      console.log('featuresGral: ', featuresGral); //[x]
+    } catch (error) {
+      featuresGral = [];
+    }
 
     await browserDet.close();
   }
