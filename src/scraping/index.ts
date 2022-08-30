@@ -1,10 +1,6 @@
 import puppeteer from 'puppeteer';
 
-import {
-  PARAMS_SEARCHER,
-  QUERY_SEARCHER,
-  urlParser,
-} from './models/page.model';
+import { PARAMS_SEARCHER, QUERY_SEARCHER } from './models/page.model';
 
 // ---------
 // variables

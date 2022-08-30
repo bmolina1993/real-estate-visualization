@@ -19,11 +19,12 @@ enum QUERY_SEARCHER {
   FEATURE_GRAL = '#reactGeneralFeatures [data-element=accordionContent] li',
   GEOLOCATION = '#article-map #static-map',
 }
-
+/*
 enum KeyValue {
   KEY = 'key',
   VALUE = 'value',
 }
+
 
 enum UrlQuery {
   CENTER = 'center',
@@ -36,6 +37,7 @@ enum UrlQuery {
   SIGNATURE = 'signature',
   CHANNEL = 'channel',
 }
+
 interface IGeolocation {
   position?: string;
   latitude?: string;
@@ -46,7 +48,7 @@ interface IUrlQuery {
   center?: string;
   zoom?: string;
   markers?: string;
-  geolocation?: IGeolocation;
+  //geolocation?: IGeolocation;
   key?: string;
   size?: string;
   sensor?: string;
@@ -68,6 +70,7 @@ const getKeyValue = (data: string, output: string): string => {
       return '';
   }
 };
+
 
 const urlParser = (data: string) => {
   //const obj ={}
@@ -102,6 +105,7 @@ const urlParser = (data: string) => {
   }
   return obj;
 };
+*/
 
 interface IDataEstate {
   price?: string;
@@ -112,7 +116,7 @@ interface IDataEstate {
   featureDept?: string[];
   featureGral?: string[];
   linkMap?: string;
-  geolocation?: IGeolocation;
+  //geolocation?: IGeolocation;
 }
 
-export { PARAMS_SEARCHER, QUERY_SEARCHER, urlParser, IDataEstate };
+export { PARAMS_SEARCHER, QUERY_SEARCHER, IDataEstate };
