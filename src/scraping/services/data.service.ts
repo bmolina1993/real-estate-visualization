@@ -3,18 +3,6 @@ import puppeteer from 'puppeteer';
 import { PARAMS_SEARCHER, QUERY_SEARCHER } from '../models/page.model';
 import { IDataEstate } from '../dtos/dataEstate.dto';
 
-// ---------
-// variables
-// ---------
-//const URL_PAGE = `${PARAMS_SEARCHER.DOMAIN}${PARAMS_SEARCHER.DEPARTAMENTOS}-${PARAMS_SEARCHER.ALQUILER}-${PARAMS_SEARCHER.UBICATION}.html`;
-//const PATH_FILE_IMAGE = 'src/scraping/images/';
-// const settingLunch = {
-//   headless: false,
-//   slowMo: 0,
-//   devtools: false,
-//   defaultViewport: null,
-// };
-
 class DataEstateService implements IDataModelService {
   private URL_PAGE = `${PARAMS_SEARCHER.DOMAIN}${PARAMS_SEARCHER.DEPARTAMENTOS}-${PARAMS_SEARCHER.ALQUILER}-${PARAMS_SEARCHER.UBICATION}.html`;
   private PATH_FILE_IMAGE = 'src/scraping/images/';
@@ -86,7 +74,7 @@ class DataEstateService implements IDataModelService {
       arrCardlinks = await page.$$eval(
         QUERY_SEARCHER.CARD_URL,
         (selector: HTMLElement[]) => {
-          const links = [];
+          const links: string[] = [];
           selector.forEach((item) => {
             links.push(
               item.attributes.getNamedItem('data-to-posting').textContent,
@@ -109,9 +97,7 @@ class DataEstateService implements IDataModelService {
     return arrCardlinks;
   }
 
-  async getPrice(link: string) {
-    const browser = await this.openBrowser();
-    const page = await this.openPage(link, browser);
+  async getPrice(page: puppeteer.Page) {
     let price: string | null;
 
     try {
@@ -121,16 +107,13 @@ class DataEstateService implements IDataModelService {
         (selector: HTMLElement) => selector?.innerText,
       );
     } catch (error) {
-      price = null;
+      price = error;
     }
 
-    await browser.close();
     return price;
   }
 
-  async getExpense(link: string) {
-    const browser = await this.openBrowser();
-    const page = await this.openPage(link, browser);
+  async getExpense(page: puppeteer.Page) {
     let expense: string | null;
 
     try {
@@ -143,13 +126,10 @@ class DataEstateService implements IDataModelService {
       expense = null;
     }
 
-    await browser.close();
     return expense;
   }
 
-  async getDatePublished(link: string) {
-    const browser = await this.openBrowser();
-    const page = await this.openPage(link, browser);
+  async getDatePublished(page: puppeteer.Page) {
     let published: string | null;
 
     try {
@@ -162,13 +142,10 @@ class DataEstateService implements IDataModelService {
       published = null;
     }
 
-    await browser.close();
     return published;
   }
 
-  async getViews(link: string) {
-    const browser = await this.openBrowser();
-    const page = await this.openPage(link, browser);
+  async getViews(page: puppeteer.Page) {
     let views: string | null;
 
     try {
@@ -181,13 +158,10 @@ class DataEstateService implements IDataModelService {
       views = null;
     }
 
-    await browser.close();
     return views;
   }
 
-  async getAddress(link: string) {
-    const browser = await this.openBrowser();
-    const page = await this.openPage(link, browser);
+  async getAddress(page: puppeteer.Page) {
     let address: string | null;
 
     try {
@@ -199,13 +173,11 @@ class DataEstateService implements IDataModelService {
     } catch (error) {
       address = null;
     }
-    await browser.close();
+
     return address;
   }
 
-  async getFeatureDept(link: string) {
-    const browser = await this.openBrowser();
-    const page = await this.openPage(link, browser);
+  async getFeatureDept(page: puppeteer.Page) {
     let featuresDept: string[] | null;
 
     try {
@@ -224,13 +196,10 @@ class DataEstateService implements IDataModelService {
       featuresDept = null;
     }
 
-    await browser.close();
     return featuresDept;
   }
 
-  async getFeatureGral(link: string) {
-    const browser = await this.openBrowser();
-    const page = await this.openPage(link, browser);
+  async getFeatureGral(page: puppeteer.Page) {
     let featuresGral: string[] | null;
 
     try {
@@ -251,13 +220,10 @@ class DataEstateService implements IDataModelService {
       featuresGral = null;
     }
 
-    await browser.close();
     return featuresGral;
   }
 
-  async getLinkMap(link: string) {
-    const browser = await this.openBrowser();
-    const page = await this.openPage(link, browser);
+  async getLinkMap(page: puppeteer.Page) {
     let linkMap: string | null;
 
     try {
@@ -270,7 +236,6 @@ class DataEstateService implements IDataModelService {
       linkMap = null;
     }
 
-    await browser.close();
     return linkMap;
   }
 
@@ -278,14 +243,17 @@ class DataEstateService implements IDataModelService {
     const alllDataEstate: IDataEstate[] = [];
 
     for (const link of links) {
-      const price = await this.getPrice(link);
-      const expense = await this.getExpense(link);
-      const published = await this.getDatePublished(link);
-      const views = await this.getViews(link);
-      const address = await this.getAddress(link);
-      const featuresDept = await this.getFeatureDept(link);
-      const featuresGral = await this.getFeatureGral(link);
-      const linkMap = await this.getLinkMap(link);
+      const browser = await this.openBrowser();
+      const page = await this.openPage(link, browser);
+
+      const price = await this.getPrice(page);
+      const expense = await this.getExpense(page);
+      const published = await this.getDatePublished(page);
+      const views = await this.getViews(page);
+      const address = await this.getAddress(page);
+      const featuresDept = await this.getFeatureDept(page);
+      const featuresGral = await this.getFeatureGral(page);
+      const linkMap = await this.getLinkMap(page);
 
       //insert all data
       alllDataEstate.push({
@@ -298,8 +266,9 @@ class DataEstateService implements IDataModelService {
         featureGral: featuresGral,
         linkMap: linkMap,
       });
-    }
 
+      await browser.close();
+    }
     return alllDataEstate;
   }
 }

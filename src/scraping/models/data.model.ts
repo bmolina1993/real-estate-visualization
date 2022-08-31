@@ -7,14 +7,14 @@ interface IDataModelService {
   getTotalResult(): Promise<number | null>;
   getTotalPage(total: number): number;
   getAllLinksPerPage(): Promise<string[] | null>;
-  getPrice(link: string): Promise<string | null>;
-  getExpense(link: string): Promise<string | null>;
-  getDatePublished(link: string): Promise<string | null>;
-  getViews(link: string): Promise<string | null>;
-  getAddress(link: string): Promise<string>;
-  getFeatureDept(link: string): Promise<string[] | null>;
-  getFeatureGral(link: string): Promise<string[] | null>;
-  getLinkMap(link: string): Promise<string | null>;
+  getPrice(page: puppeteer.Page): Promise<string | null>;
+  getExpense(page: puppeteer.Page): Promise<string | null>;
+  getDatePublished(page: puppeteer.Page): Promise<string | null>;
+  getViews(page: puppeteer.Page): Promise<string | null>;
+  getAddress(page: puppeteer.Page): Promise<string>;
+  getFeatureDept(page: puppeteer.Page): Promise<string[] | null>;
+  getFeatureGral(page: puppeteer.Page): Promise<string[] | null>;
+  getLinkMap(page: puppeteer.Page): Promise<string | null>;
   extrallAllData(links: string[]): Promise<IDataEstate[]>;
 }
 
