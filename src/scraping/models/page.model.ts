@@ -9,8 +9,10 @@ enum PARAMS_SEARCHER {
 
 // ^ represent that start with the value and the rest wildcard
 enum QUERY_SEARCHER {
-  TOTAL_RESULT = '[class^=postingsTitle__Title]',
-  CARD_URL = '[class^=components__CardContainer] [data-to-posting]',
+  //TOTAL_RESULT = '[class^=postingsTitle__Title]',[OLD version, changed in the page]
+  //CARD_URL = '[class^=components__CardContainer] [data-to-posting]',[OLD version, changed in the page]
+  TOTAL_RESULT = 'body h1',
+  CARD_URL = '[data-to-posting]',
   PRICE = '.price-items span',
   EXPENSE = '[class^=block-expensas] span',
   PUB_VIEW = '#user-views p',
@@ -19,13 +21,12 @@ enum QUERY_SEARCHER {
   FEATURE_GRAL = '#reactGeneralFeatures [data-element=accordionContent] li',
   GEOLOCATION = '#article-map #static-map',
 }
+
 /*
 enum KeyValue {
   KEY = 'key',
   VALUE = 'value',
 }
-
-
 enum UrlQuery {
   CENTER = 'center',
   ZOOM = 'zoom',
@@ -107,16 +108,4 @@ const urlParser = (data: string) => {
 };
 */
 
-interface IDataEstate {
-  price?: string;
-  expense?: string;
-  published?: string;
-  views?: string;
-  address?: string;
-  featureDept?: string[];
-  featureGral?: string[];
-  linkMap?: string;
-  //geolocation?: IGeolocation;
-}
-
-export { PARAMS_SEARCHER, QUERY_SEARCHER, IDataEstate };
+export { PARAMS_SEARCHER, QUERY_SEARCHER };

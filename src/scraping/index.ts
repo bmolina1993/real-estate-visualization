@@ -1,72 +1,30 @@
-import puppeteer from 'puppeteer';
-
-import { PARAMS_SEARCHER, QUERY_SEARCHER } from './models/page.model';
-
-// ---------
-// variables
-// ---------
-const URL_PAGE = `${PARAMS_SEARCHER.DOMAIN}${PARAMS_SEARCHER.DEPARTAMENTOS}-${PARAMS_SEARCHER.ALQUILER}-${PARAMS_SEARCHER.UBICATION}.html`;
-const PATH_FILE_IMAGE = 'src/scraping/images/';
-const settingLunch = {
-  headless: false,
-  slowMo: 0,
-  devtools: false,
-  defaultViewport: null,
-};
+import { DataEstateService } from './services/data.service';
 
 (async () => {
-  const browser = await puppeteer.launch(settingLunch);
-  const page = await browser.newPage();
+  // instanced service
+  const dataService = new DataEstateService();
 
-  await page.goto(URL_PAGE, { waitUntil: 'load' });
-  // capture screenshot
-  await page.screenshot({ path: PATH_FILE_IMAGE + 'home.png' });
+  const totalResult = await dataService.getTotalResult();
+  const totalPage = dataService.getTotalPage(totalResult);
+  const arrCardlinks = await dataService.getAllLinksPerPage();
 
-  // inspect the page for extract data
-  // extract total result of page filtered
-  // $eval = querySelector
-  // input: 193 Departamentos en alquiler en Villa Urquiza
-  // output: 193
-  const totalResult = await page.$eval(
-    QUERY_SEARCHER.TOTAL_RESULT,
-    (selector: HTMLElement) => Number(selector.textContent.split(' ', 1)[0]),
-  );
-
-  // average page by total result cosidering 20 page per page
-  const pageCountAvg = Math.round(
-    totalResult / PARAMS_SEARCHER.QTY_RESULT_DEFAULT,
-  );
   console.log('totalResult: ', totalResult); //[x]
-  console.log('pageCountAvg: ', pageCountAvg); //[x]
-
-  // $$eval = querySelectorAll
-  // extract all url pages per card
-  let arrCardlinks = await page.$$eval(
-    QUERY_SEARCHER.CARD_URL,
-    (selector: HTMLElement[]) => {
-      const links = [];
-      selector.forEach((item) => {
-        links.push(item.attributes.getNamedItem('data-to-posting').textContent);
-      });
-      return links;
-    },
-  );
-  await browser.close();
-
-  // add domain for each endPoint link
-  // item: remove first slash from endPoint
-  arrCardlinks = arrCardlinks.map(
-    (item) => PARAMS_SEARCHER.DOMAIN + item.substring(1),
-  );
+  console.log('totalPage: ', totalPage); //[x]
   console.log('arrCardlinks: ', arrCardlinks); //[x]
 
   // access to each link
   // open a new browser if required for security of page
+  //const alllDataEstate = await dataService.extrallAllData(arrCardlinks);
+  //console.log('alllDataEstate: ', alllDataEstate); //[x]
+
+  /*
+  const alllDataEstate: IDataEstate[] = [];
   for (const link of arrCardlinks) {
     const browserDet = await puppeteer.launch(settingLunch);
     const pageDet = await browserDet.newPage();
 
     await pageDet.goto(link, { waitUntil: 'load' });
+
 
     //get price
     await pageDet.waitForSelector(QUERY_SEARCHER.PRICE);
@@ -74,7 +32,8 @@ const settingLunch = {
       QUERY_SEARCHER.PRICE,
       (selector: HTMLElement) => selector?.innerText,
     );
-    console.log('price: ', price); //[x]
+    //console.log('price: ', price); //[x]
+
 
     // get expense
     // if element not exist, add field with null data
@@ -88,7 +47,8 @@ const settingLunch = {
     } catch (error) {
       expense = null;
     }
-    console.log('expense: ', expense); //[x]
+    //console.log('expense: ', expense); //[x]
+
 
     //get date published and views
     await pageDet.waitForSelector(QUERY_SEARCHER.PUB_VIEW);
@@ -100,8 +60,9 @@ const settingLunch = {
       QUERY_SEARCHER.PUB_VIEW,
       (selector: HTMLElement[]) => selector[1]?.textContent,
     );
-    console.log('published: ', published); //[x]
-    console.log('views: ', views); //[x]
+    //console.log('published: ', published); //[x]
+    //console.log('views: ', views); //[x]
+    
 
     //get address
     await pageDet.waitForSelector(QUERY_SEARCHER.ADDRESS);
@@ -109,7 +70,7 @@ const settingLunch = {
       QUERY_SEARCHER.ADDRESS,
       (selector: HTMLElement) => selector.innerText.split('\n')[0],
     );
-    console.log('address: ', address); //[x]
+    //console.log('address: ', address); //[x]
 
     //get all features
     await pageDet.waitForSelector(QUERY_SEARCHER.FEATURE_DEPT);
@@ -123,7 +84,7 @@ const settingLunch = {
         return arr;
       },
     );
-    console.log('featuresDept: ', featuresDept); //[x]
+    //console.log('featuresDept: ', featuresDept); //[x]
 
     //get all features general
     let featuresGral: string[];
@@ -144,7 +105,7 @@ const settingLunch = {
     } catch (error) {
       featuresGral = [];
     }
-    console.log('featuresGral: ', featuresGral); //[x]
+    //console.log('featuresGral: ', featuresGral); //[x]
 
     // get url google map from tag
     await pageDet.waitForSelector(QUERY_SEARCHER.GEOLOCATION);
@@ -152,10 +113,25 @@ const settingLunch = {
       QUERY_SEARCHER.GEOLOCATION,
       (selector: HTMLImageElement) => selector.src,
     );
-    console.log('linkMap: ', linkMap); //[x]
+    //console.log('linkMap: ', linkMap); //[x]
+
+
+    // save all data
+    alllDataEstate.push({
+      price: price,
+      expense: expense,
+      published: published,
+      views: views,
+      address: address,
+      featureDept: featuresDept,
+      featureGral: featuresGral,
+      linkMap: linkMap,
+    });
 
     await browserDet.close();
   }
+  console.log('alllDataEstate: ', alllDataEstate); //[x]
+*/
   //await for specific time for watch the result on navegator
   //await new Promise((r) => setTimeout(r, 60000));
 })();
