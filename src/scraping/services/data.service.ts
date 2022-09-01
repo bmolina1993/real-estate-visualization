@@ -4,11 +4,16 @@ import { PARAMS_SEARCHER, QUERY_SEARCHER } from '../models/page.model';
 import { IDataEstate } from '../dtos/dataEstate.dto';
 
 class DataEstateService implements IDataModelService {
-  private URL_PAGE = `${PARAMS_SEARCHER.DOMAIN}${PARAMS_SEARCHER.DEPARTAMENTOS}-${PARAMS_SEARCHER.ALQUILER}-${PARAMS_SEARCHER.UBICATION}.html`;
+  //private URL_PAGE = `${PARAMS_SEARCHER.DOMAIN}${PARAMS_SEARCHER.DEPARTAMENTOS}-${PARAMS_SEARCHER.ALQUILER}-${PARAMS_SEARCHER.UBICATION}-${PARAMS_SEARCHER.PAGINA}.html`;
+  private URL_PATH = `${PARAMS_SEARCHER.DOMAIN}${PARAMS_SEARCHER.DEPARTAMENTOS}-${PARAMS_SEARCHER.ALQUILER}-${PARAMS_SEARCHER.UBICATION}`;
+  private URL_PAGE = `${this.URL_PATH}-${PARAMS_SEARCHER.PAGINA}1.html`;
   private PATH_FILE_IMAGE = 'src/scraping/images/';
   private settingLunch = {
     headless: false,
+    executablePath:
+      'C:\\Users\\Braian\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe',
     slowMo: 0,
+    //slowMo: 500,
     devtools: false,
     defaultViewport: null,
   };
@@ -19,8 +24,9 @@ class DataEstateService implements IDataModelService {
   }
 
   async openPage(url: string, browser: puppeteer.Browser) {
-    const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'load' });
+    const context = await browser.createIncognitoBrowserContext();
+    const page = await context.newPage();
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
     return page;
   }
 
@@ -56,7 +62,7 @@ class DataEstateService implements IDataModelService {
 
   // average page by total result cosidering 20 page per page
   getTotalPage(total: number) {
-    const totalPageByResult = Math.round(
+    const totalPageByResult = Math.ceil(
       total / PARAMS_SEARCHER.QTY_RESULT_DEFAULT,
     );
     return totalPageByResult;
@@ -64,9 +70,9 @@ class DataEstateService implements IDataModelService {
 
   // $$eval = querySelectorAll
   // extract all url pages per card
-  async getAllLinksPerPage() {
+  async getAllLinksPerPage(URL_PAGE: string) {
     const browser = await this.openBrowser();
-    const page = await this.openPage(this.URL_PAGE, browser);
+    const page = await this.openPage(URL_PAGE, browser);
     let arrCardlinks: string[] | null;
 
     try {
@@ -89,6 +95,8 @@ class DataEstateService implements IDataModelService {
       arrCardlinks = arrCardlinks.map(
         (item) => PARAMS_SEARCHER.DOMAIN + item.substring(1),
       );
+      //ordena valores
+      arrCardlinks.sort((a, z) => a.localeCompare(z));
     } catch (error) {
       arrCardlinks = null;
     }
@@ -239,36 +247,47 @@ class DataEstateService implements IDataModelService {
     return linkMap;
   }
 
-  async extrallAllData(links: string[]) {
+  async extrallAllData(totalPage: number) {
     const alllDataEstate: IDataEstate[] = [];
 
-    for (const link of links) {
-      const browser = await this.openBrowser();
-      const page = await this.openPage(link, browser);
+    //for (let index = 1; index <= 3; index++) {
+    for (let index = 1; index <= totalPage; index++) {
+      const URL_PAGE = `${this.URL_PATH}-${PARAMS_SEARCHER.PAGINA}${index}.html`;
+      const links = await this.getAllLinksPerPage(URL_PAGE);
+      console.log('links: ', links);
 
-      const price = await this.getPrice(page);
-      const expense = await this.getExpense(page);
-      const published = await this.getDatePublished(page);
-      const views = await this.getViews(page);
-      const address = await this.getAddress(page);
-      const featuresDept = await this.getFeatureDept(page);
-      const featuresGral = await this.getFeatureGral(page);
-      const linkMap = await this.getLinkMap(page);
+      //[X] [links[0]] | links
+      for (const link of [links[0]]) {
+        const browser = await this.openBrowser();
+        const page = await this.openPage(link, browser);
 
-      //insert all data
-      alllDataEstate.push({
-        price: price,
-        expense: expense,
-        published: published,
-        views: views,
-        address: address,
-        featureDept: featuresDept,
-        featureGral: featuresGral,
-        linkMap: linkMap,
-      });
+        const price = await this.getPrice(page);
+        const expense = await this.getExpense(page);
+        const published = await this.getDatePublished(page);
+        const views = await this.getViews(page);
+        const address = await this.getAddress(page);
+        const featuresDept = await this.getFeatureDept(page);
+        const featuresGral = await this.getFeatureGral(page);
+        const linkMap = await this.getLinkMap(page);
 
-      await browser.close();
+        //insert all data
+        alllDataEstate.push({
+          price: price,
+          expense: expense,
+          published: published,
+          views: views,
+          address: address,
+          featureDept: featuresDept,
+          featureGral: featuresGral,
+          linkMap: linkMap,
+          linkBase: URL_PAGE,
+          linkDepto: link,
+        });
+
+        await browser.close();
+      }
     }
+
     return alllDataEstate;
   }
 }

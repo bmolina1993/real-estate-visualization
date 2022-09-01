@@ -7,6 +7,8 @@ interface IDataEstate {
   featureDept: string[];
   featureGral: string[];
   linkMap: string;
+  linkDepto: string;
+  linkBase: string;
 }
 
 export { IDataEstate };

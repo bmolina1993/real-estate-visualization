@@ -6,7 +6,7 @@ interface IDataModelService {
   openPage(url: string, browser: puppeteer.Browser): Promise<puppeteer.Page>;
   getTotalResult(): Promise<number | null>;
   getTotalPage(total: number): number;
-  getAllLinksPerPage(): Promise<string[] | null>;
+  getAllLinksPerPage(URL_PAGE: string): Promise<string[] | null>;
   getPrice(page: puppeteer.Page): Promise<string | null>;
   getExpense(page: puppeteer.Page): Promise<string | null>;
   getDatePublished(page: puppeteer.Page): Promise<string | null>;
@@ -15,7 +15,7 @@ interface IDataModelService {
   getFeatureDept(page: puppeteer.Page): Promise<string[] | null>;
   getFeatureGral(page: puppeteer.Page): Promise<string[] | null>;
   getLinkMap(page: puppeteer.Page): Promise<string | null>;
-  extrallAllData(links: string[]): Promise<IDataEstate[]>;
+  extrallAllData(totalPage: number): Promise<IDataEstate[]>;
 }
 
 export { IDataModelService };

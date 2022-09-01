@@ -5,6 +5,7 @@ enum PARAMS_SEARCHER {
   ALQUILER = 'alquiler',
   VENTA = 'venta',
   DEPARTAMENTOS = 'departamentos',
+  PAGINA = 'pagina-',
 }
 
 // ^ represent that start with the value and the rest wildcard
