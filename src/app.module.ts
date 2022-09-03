@@ -2,14 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Client } from 'pg';
+import 'dotenv/config';
 
 // instancia configuracion postgresql
 const client = new Client({
-  user: 'admin',
-  host: '192.168.149.128',
-  database: 'mydb',
-  password: 'admin',
-  port: 5432,
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DATABASE,
+  password: process.env.POSTGRES_PASSWORD,
+  port: Number(process.env.POSTGRES_PORT),
 });
 
 (async () => {
