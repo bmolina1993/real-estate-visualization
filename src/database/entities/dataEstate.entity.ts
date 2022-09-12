@@ -16,7 +16,7 @@ export class DataEstate extends BaseDate {
   @Column({ type: 'varchar', length: 255, nullable: true })
   published: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ name: 'view', type: 'varchar', length: 255, nullable: true })
   views: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
@@ -24,19 +24,19 @@ export class DataEstate extends BaseDate {
 
   @Column({
     name: 'feature_depto',
-    type: 'varchar',
-    length: 255,
+    type: 'text',
     nullable: true,
+    array: true,
   })
-  featureDept: string;
+  featureDept: string[];
 
   @Column({
     name: 'feature_general',
-    type: 'varchar',
-    length: 255,
+    type: 'text',
     nullable: true,
+    array: true,
   })
-  featureGral: string;
+  featureGral: string[];
 
   @Column({
     name: 'link_map',
