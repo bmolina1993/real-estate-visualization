@@ -4,6 +4,7 @@ import { ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import config from './config';
+import { DataEstateInsertService } from '../scraping/services/dataInsert.service';
 
 @Global()
 @Module({
@@ -25,6 +26,7 @@ import config from './config';
       },
     }),
   ],
-  exports: [TypeOrmModule],
+  providers: [DataEstateInsertService],
+  exports: [TypeOrmModule, DataEstateInsertService],
 })
 export class DatabaseModule {}

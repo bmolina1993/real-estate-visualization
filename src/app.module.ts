@@ -29,7 +29,6 @@ const client = new Client({
 })();
 
 @Module({
-  imports: [],
   controllers: [AppController],
   providers: [AppService],
 })

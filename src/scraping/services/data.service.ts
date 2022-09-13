@@ -7,7 +7,6 @@ import { PARAMS_SEARCHER, QUERY_SEARCHER } from '../models/page.model';
 import { IDataEstate } from '../dtos/dataEstate.dto';
 
 class DataEstateService implements IDataModelService {
-  //private URL_PAGE = `${PARAMS_SEARCHER.DOMAIN}${PARAMS_SEARCHER.DEPARTAMENTOS}-${PARAMS_SEARCHER.ALQUILER}-${PARAMS_SEARCHER.UBICATION}-${PARAMS_SEARCHER.PAGINA}.html`;
   private URL_PATH = `${PARAMS_SEARCHER.DOMAIN}${PARAMS_SEARCHER.DEPARTAMENTOS}-${PARAMS_SEARCHER.ALQUILER}-${PARAMS_SEARCHER.UBICATION}`;
   private URL_PAGE = `${this.URL_PATH}-${PARAMS_SEARCHER.PAGINA}1.html`;
   private PATH_FILE_IMAGE = 'src/scraping/images/';
