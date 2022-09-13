@@ -1,3 +1,4 @@
+/*
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -33,3 +34,5 @@ const client = new Client({
   providers: [AppService],
 })
 export class AppModule {}
+
+*/

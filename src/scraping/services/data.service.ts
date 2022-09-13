@@ -1,5 +1,8 @@
-import { IDataModelService } from '../models/data.model';
 import puppeteer from 'puppeteer';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { resolve } from 'path';
+
+import { IDataModelService } from '../models/data.model';
 import { PARAMS_SEARCHER, QUERY_SEARCHER } from '../models/page.model';
 import { IDataEstate } from '../dtos/dataEstate.dto';
 
@@ -17,6 +20,7 @@ class DataEstateService implements IDataModelService {
     devtools: false,
     defaultViewport: null,
   };
+  private PATH_FILE_DATA = resolve('./src/scraping/data/data.json');
 
   async openBrowser() {
     const browser = await puppeteer.launch(this.settingLunch);
@@ -250,13 +254,13 @@ class DataEstateService implements IDataModelService {
   async extrallAllData(totalPage: number) {
     const alllDataEstate: IDataEstate[] = [];
 
-    //for (let index = 1; index <= 3; index++) {
     for (let index = 1; index <= totalPage; index++) {
       const URL_PAGE = `${this.URL_PATH}-${PARAMS_SEARCHER.PAGINA}${index}.html`;
       const links = await this.getAllLinksPerPage(URL_PAGE);
       console.log('links: ', links);
 
-      //[X] [links[0]] | links
+      //[links[0]] : get all links of first page [X]
+      //links : get all links of all page [X]
       for (const link of [links[0]]) {
         const browser = await this.openBrowser();
         const page = await this.openPage(link, browser);
@@ -270,8 +274,8 @@ class DataEstateService implements IDataModelService {
         const featuresGral = await this.getFeatureGral(page);
         const linkMap = await this.getLinkMap(page);
 
-        //insert all data
-        alllDataEstate.push({
+        // insert data
+        alllDataEstate.unshift({
           price: price,
           expense: expense,
           published: published,
@@ -282,12 +286,47 @@ class DataEstateService implements IDataModelService {
           linkMap: linkMap,
           linkBase: URL_PAGE,
           linkDepto: link,
+          createDate: new Date().toLocaleString('es-ar'),
         });
+
+        // if exist the file, add new data to the file
+        // if not exist, create the file data.json
+        if (existsSync(this.PATH_FILE_DATA)) {
+          // read json file
+          const prevDataJson: IDataEstate[] = JSON.parse(
+            readFileSync(this.PATH_FILE_DATA, 'utf-8'),
+          );
+
+          // add new data
+          prevDataJson.unshift({
+            price: price,
+            expense: expense,
+            published: published,
+            views: views,
+            address: address,
+            featureDept: featuresDept,
+            featureGral: featuresGral,
+            linkMap: linkMap,
+            linkBase: URL_PAGE,
+            linkDepto: link,
+            createDate: new Date().toLocaleString('es-ar'),
+          });
+
+          // transform data
+          const dataJson = JSON.stringify(prevDataJson);
+
+          // save data
+          writeFileSync(this.PATH_FILE_DATA, dataJson);
+        } else {
+          // transform data
+          const dataJson = JSON.stringify(alllDataEstate);
+          // save data
+          writeFileSync(this.PATH_FILE_DATA, dataJson);
+        }
 
         await browser.close();
       }
     }
-
     return alllDataEstate;
   }
 }

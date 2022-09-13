@@ -10,7 +10,7 @@ import { DataEstateService } from './services/data.service';
 
   console.log('totalResult: ', totalResult); //[x]
   console.log('totalPage: ', totalPage); //[x]
-  console.log('alllDataEstate: ', alllDataEstate); //[x]
+  console.log('alllDataEstate: ', alllDataEstate[0]); //[x]
 
   //await for specific time for watch the result on navegator
   //await new Promise((r) => setTimeout(r, 60000));
