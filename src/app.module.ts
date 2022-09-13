@@ -1,4 +1,4 @@
-/*
+/**/
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -19,7 +19,7 @@ const client = new Client({
   await client.connect();
   try {
     //envia consulta
-    const response = await client.query('select * from tasks;');
+    const response = await client.query('select * from migrations;');
     console.log('response.rows: ', response.rows);
   } catch (error) {
     console.log('error.stack: ', error.stack);
@@ -34,5 +34,3 @@ const client = new Client({
   providers: [AppService],
 })
 export class AppModule {}
-
-*/

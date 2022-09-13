@@ -1,4 +1,5 @@
 import { DataEstateService } from './services/data.service';
+import { connectionSource } from '../database/dataSource';
 
 (async () => {
   // instanced service
@@ -11,6 +12,13 @@ import { DataEstateService } from './services/data.service';
   console.log('totalResult: ', totalResult); //[x]
   console.log('totalPage: ', totalPage); //[x]
   console.log('alllDataEstate: ', alllDataEstate[0]); //[x]
+
+  //QueryBuilder
+  const sql = await connectionSource
+    .getRepository('migrations')
+    .createQueryBuilder('migrations');
+
+  console.log('🚀 ~ file: index.ts ~ line 18 ~ sql: ', sql);
 
   //await for specific time for watch the result on navegator
   //await new Promise((r) => setTimeout(r, 60000));
