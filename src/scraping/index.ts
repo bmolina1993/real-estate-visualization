@@ -1,4 +1,4 @@
-import { dataSourceQuery } from '../database/dataSource';
+import { dataSource } from '../database/dataSource';
 //import { DataEstateService } from './services/data.service';
 //import { DataEstateInsertService } from './services/dataInsert.service';
 import { DataEstate } from '../database/entities/dataEstate.entity';
@@ -18,7 +18,7 @@ import { DataEstate } from '../database/entities/dataEstate.entity';
   console.log('alllDataEstate: ', alllDataEstate[0]); //[x]
 */
   //QueryBuilder
-  const repository = await dataSourceQuery.initialize();
+  const repository = await dataSource.initialize();
   const data = await repository
     .getRepository(DataEstate)
     .createQueryBuilder('DataEstate')
