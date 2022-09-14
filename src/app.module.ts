@@ -1,9 +1,10 @@
 /**/
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { Client } from 'pg';
 import 'dotenv/config';
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 // instancia configuracion postgresql
 const client = new Client({

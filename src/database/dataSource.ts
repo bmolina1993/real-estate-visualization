@@ -2,6 +2,8 @@
 import { DataSource } from 'typeorm';
 import 'dotenv/config';
 
+import { DataEstate } from './entities/dataEstate.entity';
+
 export const connectionSource = new DataSource({
   type: 'postgres',
   username: process.env.POSTGRES_USER,
@@ -13,4 +15,14 @@ export const connectionSource = new DataSource({
   logging: true,
   entities: ['src/*/*/*.entity.ts'],
   migrations: ['src/database/migrations/*.ts'],
+});
+
+export const dataSourceQuery = new DataSource({
+  type: 'postgres',
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
+  port: Number(process.env.POSTGRES_PORT),
+  host: process.env.POSTGRES_HOST,
+  entities: [DataEstate],
 });
