@@ -2,6 +2,7 @@ import { dataSource } from '../database/dataSource';
 //import { DataEstateService } from './services/data.service';
 //import { DataEstateInsertService } from './services/dataInsert.service';
 import { DataEstate } from '../database/entities/dataEstate.entity';
+import { clientCode } from './services/dbConection.service';
 
 (async () => {
   // instanced service
@@ -17,13 +18,16 @@ import { DataEstate } from '../database/entities/dataEstate.entity';
   console.log('totalPage: ', totalPage); //[x]
   console.log('alllDataEstate: ', alllDataEstate[0]); //[x]
 */
+  clientCode(); //[x]
   //QueryBuilder
+  /*
   const repository = await dataSource.initialize();
   const data = await repository
     .getRepository(DataEstate)
     .createQueryBuilder('DataEstate')
     .getMany();
   console.log('🚀 ~ file: index.ts ~ line 26 ~ data', data);
+  */
 
   //await for specific time for watch the result on navegator
   //await new Promise((r) => setTimeout(r, 60000));
