@@ -41,7 +41,6 @@ export class DataEstate extends BaseDate {
   @Column({
     name: 'link_map',
     type: 'varchar',
-    length: 255,
     nullable: true,
   })
   linkMap: string;
