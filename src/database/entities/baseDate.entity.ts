@@ -4,14 +4,14 @@ import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
 export abstract class BaseDate {
   @CreateDateColumn({
     name: 'create_dttm',
-    type: 'timetz',
+    type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createDttm: Date;
 
   @UpdateDateColumn({
     name: 'update_dttm',
-    type: 'timetz',
+    type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
   updateDttm: Date;

@@ -9,7 +9,7 @@ interface IDataEstate {
   linkMap: string;
   linkDepto: string;
   linkBase: string;
-  createDate: string;
+  createDttm: Date;
 }
 
 export { IDataEstate };

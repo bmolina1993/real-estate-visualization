@@ -20,6 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "scraping": "node dist/scraping/index.js",
+    "bulkdata": "node dist/scraping/dataSql.index.js",
     "typeorm": "typeorm-ts-node-commonjs -d src/database/dataSource.ts",
     "migration:generate": "npm run typeorm migration:generate ./src/database/migrations/init",
     "migration:run": "npm run typeorm migration:run",

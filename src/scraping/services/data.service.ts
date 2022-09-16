@@ -285,7 +285,7 @@ class DataEstateService implements IDataModelService {
           linkMap: linkMap,
           linkBase: URL_PAGE,
           linkDepto: link,
-          createDate: new Date().toLocaleString('es-ar'),
+          createDttm: new Date(),
         });
 
         // if exist the file, add new data to the file
@@ -308,7 +308,7 @@ class DataEstateService implements IDataModelService {
             linkMap: linkMap,
             linkBase: URL_PAGE,
             linkDepto: link,
-            createDate: new Date().toLocaleString('es-ar'),
+            createDttm: new Date(),
           });
 
           // transform data

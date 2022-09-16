@@ -39,6 +39,7 @@ export class DataSql implements IDataSqlModelService {
           linkMap: item.linkMap,
           linkBase: item.linkBase,
           linkDepto: item.linkDepto,
+          createDttm: item.createDttm,
         })
         .execute();
     });
