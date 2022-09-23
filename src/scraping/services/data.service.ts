@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 import { writeFileSync, readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
+import 'dotenv/config';
 
 import { IDataModelService } from '../models/data.model';
 import { PARAMS_SEARCHER, QUERY_SEARCHER } from '../models/page.model';
@@ -12,8 +13,7 @@ class DataEstateService implements IDataModelService {
   private PATH_FILE_IMAGE = 'src/scraping/images/';
   private settingLunch = {
     headless: false,
-    executablePath:
-      'C:\\Users\\Braian\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe',
+    executablePath: process.env.EXECUTABLE_PATH,
     slowMo: 0,
     //slowMo: 500,
     devtools: false,
@@ -260,7 +260,7 @@ class DataEstateService implements IDataModelService {
 
       //[links[0]] : get all links of first page [X]
       //links : get all links of all page [X]
-      for (const link of [links[0]]) {
+      for (const link of links) {
         const browser = await this.openBrowser();
         const page = await this.openPage(link, browser);
 
