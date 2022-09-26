@@ -1,6 +1,7 @@
 import { Singleton } from './dbConection.service';
+import { IProccessDBModelService } from '../models/proccessDB.model';
 
-export class ProccessDB {
+export class ProccessDB implements IProccessDBModelService {
   // ------------------
   // feature_depto - 01
   // ------------------
@@ -10,7 +11,7 @@ export class ProccessDB {
   // ----------------------------
   async postFnCleansingFeatureDepto() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop trigger if exists tr_cleansing_feature_depto on public.feature_depto;
       drop function if exists public.fn_cleansing_feature_depto;
       create function public.fn_cleansing_feature_depto()
@@ -50,7 +51,7 @@ export class ProccessDB {
   // ---------------------------------
   async postTrCleansingFeatureDepto() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop trigger if exists tr_cleansing_feature_depto on public.feature_depto;
       create trigger tr_cleansing_feature_depto
       after insert
@@ -69,7 +70,7 @@ export class ProccessDB {
   // ----------------------------
   async postFnCleansingGeolocation() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop trigger if exists tr_cleansing_geolocation on public.geolocation;
       drop function if exists public.fn_cleansing_geolocation;
       create function public.fn_cleansing_geolocation()
@@ -102,7 +103,7 @@ export class ProccessDB {
   // ---------------------------------
   async postTrCleansingGeolocation() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop trigger if exists tr_cleansing_geolocation on public.geolocation;
       create trigger tr_cleansing_geolocation
       after insert
@@ -120,7 +121,7 @@ export class ProccessDB {
   // ------------------------------------------------
   async postFnArraySetElement() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop function if exists public.array_set_element;
       create function public.array_set_element(arr text[], elem text, idx int)
       returns text[]
@@ -141,7 +142,7 @@ export class ProccessDB {
   // --------------------------------------------------
   async postFnProcessesDataEstate() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop trigger if exists tr_processes_data_estate on public.data_estate;
       drop function if exists public.fn_processes_data_estate;
       create function public.fn_processes_data_estate()
@@ -284,7 +285,7 @@ export class ProccessDB {
   // --------------------------------
   async postTrProcessesDataEstate() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop trigger if exists tr_processes_data_estate on public.data_estate;
       create trigger tr_processes_data_estate
       after insert
@@ -299,7 +300,7 @@ export class ProccessDB {
   // ---------------------------------
   async postFnPrice() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop view if exists public.vw_full_data;
       drop function if exists public.fn_price;
       create function public.fn_price(p_type text, p_price text)
@@ -330,7 +331,7 @@ export class ProccessDB {
 
   async postVwFullData() {
     const dataSource = await Singleton.getInstance();
-    return await dataSource.query(/*sql*/ `
+    await dataSource.query(/*sql*/ `
       drop view if exists public.vw_full_data;
       create view public.vw_full_data as 
       select distinct
