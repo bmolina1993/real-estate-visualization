@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
 import 'dotenv/config';
 
@@ -19,7 +19,10 @@ class DataEstateService implements IDataModelService {
     devtools: false,
     defaultViewport: null,
   };
-  private PATH_FILE_DATA = resolve('./src/scraping/data/data.json');
+  private PATH_FOLDER_DATA = resolve(
+    `./src/scraping/data/${new Date().toISOString().split('T')[0]}`,
+  );
+  private PATH_FILE_DATA = resolve(`${this.PATH_FOLDER_DATA}/data.json`);
 
   async openBrowser() {
     const browser = await puppeteer.launch(this.settingLunch);
@@ -256,7 +259,7 @@ class DataEstateService implements IDataModelService {
     for (let index = 1; index <= totalPage; index++) {
       const URL_PAGE = `${this.URL_PATH}-${PARAMS_SEARCHER.PAGINA}${index}.html`;
       const links = await this.getAllLinksPerPage(URL_PAGE);
-      console.log('links: ', links);
+      console.log('links: ', links); //[x]
 
       //[links[0]] : get all links of first page [X]
       //links : get all links of all page [X]
@@ -288,8 +291,6 @@ class DataEstateService implements IDataModelService {
           createDttm: new Date(),
         });
 
-        // if exist the file, add new data to the file
-        // if not exist, create the file data.json
         if (existsSync(this.PATH_FILE_DATA)) {
           // read json file
           const prevDataJson: IDataEstate[] = JSON.parse(
@@ -317,6 +318,8 @@ class DataEstateService implements IDataModelService {
           // save data
           writeFileSync(this.PATH_FILE_DATA, dataJson);
         } else {
+          // create folder data
+          mkdirSync(this.PATH_FOLDER_DATA);
           // transform data
           const dataJson = JSON.stringify(alllDataEstate);
           // save data

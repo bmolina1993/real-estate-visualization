@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 
 import { Singleton } from './dbConection.service';
@@ -7,7 +7,7 @@ import { DataEstate } from '../../database/entities/dataEstate.entity';
 import { IDataEstate } from '../dtos/dataEstate.dto';
 
 export class DataSql implements IDataSqlModelService {
-  private PATH_FILE_DATA = resolve('./src/scraping/data/data.json');
+  private PATH_FOLDER_DATA = resolve('./src/scraping/data/');
 
   async getAll() {
     const dataSource = await Singleton.getInstance();
@@ -19,8 +19,17 @@ export class DataSql implements IDataSqlModelService {
 
   async setAll() {
     const dataSource = await Singleton.getInstance();
+    const arrFolder = readdirSync(this.PATH_FOLDER_DATA);
+    // get the last date folder created
+    const lastFolderDate = [...arrFolder].sort(
+      (a, z) => new Date(z).getTime() - new Date(a).getTime(),
+    )[0];
+    const PATH_FILE_DATA = resolve(
+      `${this.PATH_FOLDER_DATA}/${lastFolderDate}/data.json`,
+    );
+
     const dataJson: IDataEstate[] = JSON.parse(
-      readFileSync(this.PATH_FILE_DATA, 'utf-8'),
+      readFileSync(PATH_FILE_DATA, 'utf-8'),
     );
 
     dataJson.forEach(async (item) => {
