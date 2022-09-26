@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "scraping": "node dist/scraping/index.js",
     "bulkdata": "node dist/scraping/dataSql.index.js",
+    "proccessDB": "node dist/scraping/proccessDB.index.js",
     "typeorm": "typeorm-ts-node-commonjs -d src/database/dataSource.ts",
     "migration:generate": "npm run typeorm migration:generate ./src/database/migrations/init",
     "migration:run": "npm run typeorm migration:run",

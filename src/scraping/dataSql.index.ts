@@ -12,5 +12,5 @@ import { DataSql } from './services/dataSql.service';
   //console.log('🚀 ~ file: dataSql.index.ts ~ line 12 ~ data:', data);
 
   // insert all data .jdon to table [public.data_estate]
-  dataSql.setAll();
+  await dataSql.setAll();
 })();
