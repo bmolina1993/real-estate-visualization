@@ -1,0 +1,20 @@
+# --------
+# back end
+# --------
+# data extracted
+back_end/src/scraping/data/2022-09-26/data.json
+
+//envionments
+.env
+
+# compiled output
+back_end/dist
+back_end/node_modules
+
+# IDE - VSCode
+back_end/.vscode/*
+
+
+# ---------
+# front end
+# ---------
