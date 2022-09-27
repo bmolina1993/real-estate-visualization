@@ -1,5 +1,6 @@
 //envionments
 .env
+*data.json
 
 # compiled output
 /dist
