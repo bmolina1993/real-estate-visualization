@@ -2,7 +2,8 @@
 # back end
 # --------
 # data extracted
-back_end/src/scraping/data/2022-09-26/data.json
+!back_end/src/scraping/data/2022-09-26/data.json
+
 
 //envionments
 back_end/.env
