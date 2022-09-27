@@ -5,7 +5,7 @@
 back_end/src/scraping/data/2022-09-26/data.json
 
 //envionments
-.env
+back_end/.env
 
 # compiled output
 back_end/dist
@@ -13,7 +13,10 @@ back_end/node_modules
 
 # IDE - VSCode
 back_end/.vscode/*
-
+!back_end/.vscode/settings.json
+!back_end/.vscode/tasks.json
+!back_end/.vscode/launch.json
+!back_end/.vscode/extensions.json
 
 # ---------
 # front end
