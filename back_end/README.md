@@ -1,26 +1,109 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+# 🏠 Real estate data extraction and visualization 📶
+<!--
+<p>
+  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-Node.js-43853D?style=flat&logo=node.js&logoColor=white&label=v16.16.0&labelColor=gray"
+      alt="Node Js"
+    />
+  </a>
+  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-npm-cb0000?style=flat&logo=npm&logoColor=white&label=v8.11.0&labelColor=gray"
+      alt="Node Js"
+    />
+  </a>
+  <a href="https://nestjs.com/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-NestJs-e0234e?style=flat&logo=NestJS&logoColor=white&label=v8.0&labelColor=gray"
+      alt="Nest JS"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-TypeScript-3178c6?style=flat&logo=TypeScript&logoColor=white&label=v4.3.5&labelColor=gray"
+      alt="TypeScript"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-Puppeteer-00d7a1?style=flat&logo=Puppeteer&logoColor=white&label=v16.2.0&labelColor=gray"
+      alt="Puppeteer"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-TypeORM-e83524?style=flat&logo=orm&logoColor=white&label=v0.3.9&labelColor=gray"
+      alt="TypeORM"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/Docker-46a2f1?style=flat&logo=docker&logoColor=white&label=v20.10.17&labelColor=gray"
+      alt="Docker"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/postgres-%23316192.svg?style=flat&logo=postgresql&logoColor=white&label=v14.5&labelColor=gray"
+      alt="Postgres"
+    />
+  </a>
+</p>
+-->
+
+<p>
+  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-v16.16.0-gray?style=flat&logo=node.js&logoColor=white&label=Node.js&labelColor=43853D"
+      alt="Node Js"
+    />
+  </a>
+  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-v8.11.0-gray?style=flat&logo=npm&label=npm&labelColor=cb0000"
+      alt="Node Js"
+    />
+  </a>
+  <a href="https://nestjs.com/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-v8.0-gray?style=flat&logo=NestJS&logoColor=white&label=NestJs&labelColor=e0234e"
+      alt="Nest JS"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-v4.3.5-gray?style=flat&logo=TypeScript&logoColor=white&label=TypeScript&labelColor=3178c6"
+      alt="TypeScript"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-v16.2.0-gray?style=flat&logo=Puppeteer&logoColor=white&label=Puppeteer&labelColor=00d7a1"
+      alt="Puppeteer"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/-v0.3.9-gray?style=flat&logo=orm&logoColor=white&label=TypeORM&labelColor=e83524"
+      alt="TypeORM"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/v20.10.17-gray?style=flat&logo=docker&logoColor=white&label=Docker&labelColor=46a2f1"
+      alt="Docker"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
+      src="https://img.shields.io/badge/v14.5-gray?style=flat&logo=postgresql&logoColor=white&label=postgres&labelColor=32658e"
+      alt="Postgres"
+    />
+  </a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# BackEnd
 
 ## Description
 
