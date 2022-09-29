@@ -1,57 +1,4 @@
 # 🏠 Real estate data extraction and visualization 📶
-<!--
-<p>
-  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
-    <img
-      src="https://img.shields.io/badge/-Node.js-43853D?style=flat&logo=node.js&logoColor=white&label=v16.16.0&labelColor=gray"
-      alt="Node Js"
-    />
-  </a>
-  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
-    <img
-      src="https://img.shields.io/badge/-npm-cb0000?style=flat&logo=npm&logoColor=white&label=v8.11.0&labelColor=gray"
-      alt="Node Js"
-    />
-  </a>
-  <a href="https://nestjs.com/" target="_blank">
-    <img
-      src="https://img.shields.io/badge/-NestJs-e0234e?style=flat&logo=NestJS&logoColor=white&label=v8.0&labelColor=gray"
-      alt="Nest JS"
-    />
-  </a>
-  <a href="https://www.typescriptlang.org/" target="_blank">
-    <img
-      src="https://img.shields.io/badge/-TypeScript-3178c6?style=flat&logo=TypeScript&logoColor=white&label=v4.3.5&labelColor=gray"
-      alt="TypeScript"
-    />
-  </a>
-  <a href="https://www.typescriptlang.org/" target="_blank">
-    <img
-      src="https://img.shields.io/badge/-Puppeteer-00d7a1?style=flat&logo=Puppeteer&logoColor=white&label=v16.2.0&labelColor=gray"
-      alt="Puppeteer"
-    />
-  </a>
-  <a href="https://www.typescriptlang.org/" target="_blank">
-    <img
-      src="https://img.shields.io/badge/-TypeORM-e83524?style=flat&logo=orm&logoColor=white&label=v0.3.9&labelColor=gray"
-      alt="TypeORM"
-    />
-  </a>
-  <a href="https://www.typescriptlang.org/" target="_blank">
-    <img
-      src="https://img.shields.io/badge/Docker-46a2f1?style=flat&logo=docker&logoColor=white&label=v20.10.17&labelColor=gray"
-      alt="Docker"
-    />
-  </a>
-  <a href="https://www.typescriptlang.org/" target="_blank">
-    <img
-      src="https://img.shields.io/badge/postgres-%23316192.svg?style=flat&logo=postgresql&logoColor=white&label=v14.5&labelColor=gray"
-      alt="Postgres"
-    />
-  </a>
-</p>
--->
-
 <p>
   <a href="https://www.npmjs.com/~nestjscore" target="_blank">
     <img
@@ -91,6 +38,12 @@
   </a>
   <a href="https://www.typescriptlang.org/" target="_blank">
     <img
+      src="https://img.shields.io/badge/v22.04.1-gray?style=flat&logo=ubuntu&logoColor=white&label=Ubuntu&labelColor=e95420"
+      alt="Ubuntu"
+    />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img
       src="https://img.shields.io/badge/v20.10.17-gray?style=flat&logo=docker&logoColor=white&label=Docker&labelColor=46a2f1"
       alt="Docker"
     />
@@ -104,53 +57,73 @@
 </p>
 
 # BackEnd
+Follow the steps below to install the project
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
+## 1. Installation
 ```bash
 $ npm install
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+## 2. PostgreSQL installation by docker command
+For the installation of the database we used ubuntu operating system.
+```docker
+$ sudo docker pull postgres:14.5
+```
+```docker
+$ sudo docker create -p5432:5432 --name postgresql -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=mydb postgres:14.5
 ```
 
-## Test
-
+## 3. Generate migration file
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ npm run migration:generate
 ```
 
-## Support
+## 4. Execution of migration to create tables in database
+```bash
+$ npm run migration:run
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 5. build the project
+```bash
+$ npm run build
+```
 
-## Stay in touch
+## 6. Creation of triggers, functions and view
+```bash
+$ npm run proccessDB
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 7. Data web scraping
+```bash
+$ npm run scraping
+```
 
-## License
+## 8. insert all data extracted in database
+```bash
+$ npm run bulkdata
+```
 
-Nest is [MIT licensed](LICENSE).
+## Example result
+```json
+{
+    "price": "$ 59.000",
+    "expense": "$ 10.200",
+    "published": "Publicado hace 2 días",
+    "views": "229 visualizaciones",
+    "address": "***",
+    "featureDept": [
+      "70 m² Total",
+      "30 m² Cubierta",
+      "1 Ambiente"
+    ],
+    "featureGral": [
+      "Parrilla",
+      "Cocina",
+      "Living comedor"
+    ],
+    "linkMap": "***",
+    "linkBase": "***",
+    "linkDepto": "***",
+    "createDttm": "2022-09-17T16:22:02.864Z"
+  }
+```
