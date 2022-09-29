@@ -72,6 +72,9 @@ $ sudo docker pull postgres:14.5
 ```docker
 $ sudo docker create -p5432:5432 --name postgresql -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=mydb postgres:14.5
 ```
+```docker
+$ sudo docker start postgresql
+```
 
 ## 3. Generate migration file
 ```bash
