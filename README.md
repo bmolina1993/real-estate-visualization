@@ -130,3 +130,10 @@ $ npm run bulkdata
   "createDttm": "2022-09-17T16:22:02.864Z"
 }
 ```
+### Main objects created in database
+<div>
+  <img src="./back_end/src/images/data_estate.png">
+  <img src="./back_end/src/images/feature_depto.png">
+  <img src="./back_end/src/images/geolocation.png">
+  <img src="./back_end/src/images/vw_full_data.png">
+</div>
